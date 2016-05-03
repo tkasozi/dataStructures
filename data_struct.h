@@ -1,13 +1,13 @@
 /* 
- * File:   data_struct.hpp
+ * File:   data_struct.h
  * Author: Talik Kasozi <projectxyz.org>
  *
  * Created on April 27, 2016, 6:44 PM
  */
 
-#ifndef DATA_STRUCT_HPP
-#define	DATA_STRUCT_HPP
-#include "globals.hpp"
+#ifndef DATA_STRUCT_H
+#define	DATA_STRUCT_H
+#include "globals.h"
 #include <iterator>
 
 namespace data_struct {
@@ -119,5 +119,5 @@ namespace data_struct {
     }
 }
 
-#endif	/* DATA_STRUCT_HPP */
+#endif	/* DATA_STRUCT_H */
 

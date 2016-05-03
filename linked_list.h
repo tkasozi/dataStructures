@@ -1,5 +1,5 @@
 /* 
- * File:   linked_list.hpp
+ * File:   linked_list.h
  * 
  * This linked list appends on the front and on the back. 
  * Therefore, it's also the implementation of a QUEUE.
@@ -9,9 +9,9 @@
  * Created on April 28, 2016, 9:45 AM
  */
 
-#ifndef LINKED_LIST_HPP
-#define	LINKED_LIST_HPP
-#include "data_struct.hpp"
+#ifndef LINKED_LIST_H
+#define	LINKED_LIST_H
+#include "data_struct.h"
 
 using namespace data_struct::list_structs;
 
@@ -66,5 +66,5 @@ status linked_list<T>::traverse(list_node_ptr ptr, void(*p_func)(T*)) {
 
     return traverse(ptr->next, p_func);
 }
-#endif	/* LINKED_LIST_HPP */
+#endif	/* LINKED_LIST_H */
 

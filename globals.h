@@ -1,12 +1,12 @@
 /* 
- * File:   globals.hpp
+ * File:   globals.h
  * Author: Talik Kasozi <projectxyz.org>
  *
  * Created on April 27, 2016, 2:40 PM
  */
 
-#ifndef GLOBALS_HPP
-#define	GLOBALS_HPP
+#ifndef GLOBALS_H
+#define	GLOBALS_H
 
 enum status {
     OK, ERROR
@@ -35,5 +35,5 @@ struct double_linked_node {
     double_linked_node* previous;
 };
 
-#endif	/* GLOBALS_HPP */
+#endif	/* GLOBALS_H */
 

@@ -1,5 +1,5 @@
 /* 
- * File:   BST.hpp Binary Search Tree
+ * File:   BST.h Binary Search Tree
  * 
  * TO use this template on most data types, please remember to override the
  * > < == operators;
@@ -9,9 +9,10 @@
  * Created on April 27, 2016, 3:19 PM
  */
 
-#ifndef BST_HPP
-#define	BST_HPP
-#include "data_struct.hpp"
+#ifndef BST_H
+#define	BST_H
+
+#include "data_struct.h"
 
 using namespace data_struct::btree; //btree template,
 
@@ -111,4 +112,4 @@ tree_node_ptr btree<T>::search(tree_node_ptr leaf, generic_ptr data) {
         return leaf;
     }
 }
-#endif	/* BST_HPP */
+#endif	/* BST_H */

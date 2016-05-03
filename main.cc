@@ -1,13 +1,13 @@
 /* 
- * File:   main.cpp
+ * File:   main.cc
  * Author: Talik Kasozi <projectxyz.org>
  *
  * Created on April 25, 2016, 6:13 PM
  */
 
 #include <iostream>
-#include "BST.hpp"
-#include "linked_list.hpp"
+#include "BST.h"
+#include "linked_list.h"
 
 using namespace std;
 
