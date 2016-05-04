@@ -5,8 +5,8 @@
  * Created on April 25, 2016, 6:13 PM
  */
 
-#include  "Headers/BST.h"
-#include "Headers/linked_list.h"
+#include "base/BST.h"
+#include "base/linked_list.h"
 #include <iostream>
 
 using namespace std;
@@ -56,8 +56,9 @@ void print3(int* x) {
     cout << *x << " ";
 }
 
-int main(int argc, char** argv) {
-    using namespace data_struct::list_structs;
+int main__(int argc, char** argv) {
+    using ::dataStructures::linked_list;
+
     int xrry[] = {67, 88, 8, 7, 6, 3, 0, 4, 2, 1, 0, 9, 100, 12, 14, 16, 17, 122, 144, 99, 34, 23, 55, 2, 123, 232, 42, 4657};
 
     linked_list<int> * lst = new linked_list<int>();
@@ -65,26 +66,17 @@ int main(int argc, char** argv) {
     for (auto &i : xrry) {
         lst->insert(&i);
     }
-    //    lst->traverse(print3);
-    //    cout << endl;
-    //    lst->traverse(sqr);
-    //
-    //    lst->traverse(print3);
+    lst->traverse(print3);
 
     cout << "\nlinked list length: " << lst->getLength() << endl;
-    //
-    //    for (list_node_ptr it = lst->getList_root(); it != lst->getList_root() + 5; it++) {
-    //        cout << *(int*)it << endl;
-    //    }
-    //    for (auto &i : lst) {
-    //        cout << i << endl;
-    //    }
 
     return 0;
 }
 
+// <editor-fold defaultstate="collapsed" desc="expand the code">
+
 int main_(int argc, char** argv) {
-    using namespace data_struct::btree; //btree template,
+    using ::dataStructures::btree; //btree template,
 
     Person* talik = new Person("Kasozix");
     Person* kasozi = new Person("Kasozi");
@@ -115,10 +107,12 @@ int main_(int argc, char** argv) {
         cout << "did not find \"" << other->GetName() << "\"" << endl;
     }
     return 0;
-}
+}// </editor-fold>
 
-int main__(int argc, char** argv) {
-    using namespace data_struct::btree; //btree template,
+// <editor-fold defaultstate="collapsed" desc="expand the code">
+
+int main(int argc, char** argv) {
+    using ::dataStructures::btree; //btree template,
 
     int xrry[] = {90009, 9, 65674345, 8787878, 67, 88, 8, 7, 6, 3, 0, 4, 2, 1, 0, 9, 100, 12, 14, 16, 17, 122, 144, 99, 34, 23, 55, 2, 123, 4232, 12324, 535343, 232, 42, 232323, 232323, 232124553, 4657};
     int b = 5, search = 535343;
@@ -137,11 +131,10 @@ int main__(int argc, char** argv) {
 
     if ((x = binarytree->search(&search)) != nullptr) {
         cout << "found " << search << endl;
-        cout << " next: " << *(int*) x->right->datapointer << " before: " << *(int*) x->left->datapointer;
     } else {
         cout << "did not find " << search << endl;
     }
 
-    binarytree->~btree();
+    //binarytree->~btree();
     return 0;
-}
+}// </editor-fold>
