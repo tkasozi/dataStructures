@@ -9,27 +9,27 @@
  * Created on April 27, 2016, 3:19 PM
  */
 
-#ifndef BST_H
-#define	BST_H
+#ifndef BINARY_SEARCH_TREE_H
+#define	BINARY_SEARCH_TREE_H
 
 #include "globals.h"
-#include "data_struct.h"
+#include "DataStructures.h"
 
 //Definition of the bTree functions is within the scope of the nameSpace.
-namespace dataStructures {
+namespace datastructures {
 
     template<typename T>
-    void btree<T>::setRoot(tree_node_ptr root) {
-        this->root = root;
+    void BinaryTree<T>::setRoot(treeNodePointer root) {
+        this->root_ = root;
     }
 
     template <typename T>
-    void btree<T>::insert(tree_node_ptr leaf, generic_ptr data) {
+    void BinaryTree<T>::insert(treeNodePointer leaf, genericPointer data) {
 
         if (*(T*) data < *(T*) leaf->datapointer) {//left branch
             if (empty(leaf->left)) {
 
-                tree_node_ptr temp = new tree_node;
+                treeNodePointer temp = new TreeNode;
 
                 temp->datapointer = data;
                 temp->left = nullptr;
@@ -44,7 +44,7 @@ namespace dataStructures {
 
             if (empty(leaf->right)) {
 
-                tree_node_ptr temp = new tree_node;
+                treeNodePointer temp = new TreeNode;
 
                 temp->datapointer = data;
                 temp->left = nullptr;
@@ -62,7 +62,7 @@ namespace dataStructures {
     //in-order traverse
 
     template <typename T>
-    status btree<T>::inorder_traverse(tree_node_ptr node, status(*p_func)(T)) {
+    status BinaryTree<T>::inorderTraverse(treeNodePointer node, status(*p_func)(T)) {
         status rc;
 
         if (empty(node)) {
@@ -75,14 +75,14 @@ namespace dataStructures {
         //    if (rc == OK) {
         //        rc = inorder_traverse(node->left, p_func);
         //    }
-        rc = inorder_traverse(node->left, p_func);
+        rc = inorderTraverse(node->left, p_func);
 
         if (rc == OK) {
             rc = (*p_func)(*(T*) node->datapointer);
         }
 
         if (rc == OK) {
-            rc = inorder_traverse(node->right, p_func);
+            rc = inorderTraverse(node->right, p_func);
         }
 
         return rc;
@@ -91,18 +91,18 @@ namespace dataStructures {
     //option to use data before destroying the tree.
 
     template <typename T>
-    void btree<T>::destroy_tree(tree_node_ptr leaf) {
+    void BinaryTree<T>::destroyTree(treeNodePointer leaf) {
 
         if (!empty(leaf)) {
-            destroy_tree(leaf->left);
-            destroy_tree(leaf->right);
+            destroyTree(leaf->left);
+            destroyTree(leaf->right);
 
             delete leaf;
         }
     }
 
     template <typename T>
-    tree_node_ptr btree<T>::search(tree_node_ptr leaf, generic_ptr data) {
+    treeNodePointer BinaryTree<T>::search(treeNodePointer leaf, genericPointer data) {
         if (empty(leaf)) {
             return nullptr;
         }

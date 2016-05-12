@@ -5,13 +5,31 @@
  * Created on April 27, 2016, 6:44 PM
  */
 
-#ifndef DATA_STRUCT_H
-#define	DATA_STRUCT_H
-#include  "globals.h"
+#ifndef DATASTRUCTURES_H
+#define	DATASTRUCTURES_H
+
+#ifdef DOUBLYLINKEDLIST_H
+#error "DoublyLinkedList_Impl.h should not to be included directly. Include DataStructures.h"
+#endif
+
+#ifdef LINKED_LIST_H
+#error "LinkedList_Impl.h should not to be included directly. Include DataStructures.h"
+#endif
+
+#ifdef BINARY_SEARCH_TREE_H
+#error "BinarySearchTree_Impl.h should not to be included directly. Include DataStructures.h"
+#endif 
+
+#include <iostream>
 #include <iterator>
 
-namespace dataStructures {
+#include  "globals.h"
 
+namespace datastructures {
+
+    enum StructureState {
+        SORTED, UNSORTED
+    };
     //Binary Search Tree template 
     //Example:
     //btree<int>* binarytree = new btree<int>();
@@ -19,20 +37,20 @@ namespace dataStructures {
     //delete binarytree;
 
     template<typename T>
-    class btree {
+    class BinaryTree {
     public:
 
         //using this->root because of recursion to search and insert in
         //a tree
 
-        btree() : root(nullptr) {
+        BinaryTree() : root_(nullptr) {
         };
 
-        virtual ~btree() {
-            destroy_tree(this->getRoot());
+        virtual ~BinaryTree() {
+            destroyTree(this->getRoot());
         }
 
-        inline bool empty(tree_node_ptr leaf) {
+        inline bool empty(treeNodePointer leaf) {
             return (leaf == nullptr);
         }
 
@@ -40,7 +58,7 @@ namespace dataStructures {
         //This is achieved with the inorder_traverse()
 
         status traverse(status(*p_func)(T)) {
-            return inorder_traverse(this->getRoot(), p_func);
+            return inorderTraverse(this->getRoot(), p_func);
         }
 
         //Returns a pointer to the target node a nullptr otherwise. 
@@ -50,19 +68,19 @@ namespace dataStructures {
         //The internal representation is hidden to prevent 
         //1. Too much casting ie search((string*)data), search((int*)data) ...
         //2. To allow encapsulation. ie. the Root of the tree can only be 
-        //modified from with in the class or by those related.
+        //modified from with in the class.
 
-        tree_node_ptr search(T* data) {
-            return search(this->getRoot(), (generic_ptr) data);
+        treeNodePointer search(T* data) {
+            return search(this->getRoot(), (genericPointer) data);
         }
 
         void insert(T* data) {
 
             if (!empty(this->getRoot())) {
-                insert(this->getRoot(), (generic_ptr) data);
+                insert(this->getRoot(), (genericPointer) data);
             } else {
-                tree_node_ptr temp = new tree_node;
-                temp->datapointer = (generic_ptr) data;
+                treeNodePointer temp = new TreeNode;
+                temp->datapointer = (genericPointer) data;
                 temp->left = nullptr;
                 temp->right = nullptr;
 
@@ -70,81 +88,205 @@ namespace dataStructures {
             }
         }
 
-        inline tree_node_ptr getRoot() const {
-            return root;
+        inline treeNodePointer getRoot() const {
+            return root_;
         }
     private:
-        void setRoot(tree_node_ptr root);
-        void destroy_tree(tree_node_ptr leaf);
-        void insert(tree_node_ptr, generic_ptr);
+        void setRoot(treeNodePointer root);
+        void destroyTree(treeNodePointer leaf);
+        void insert(treeNodePointer, genericPointer);
         //This is the internal representation of the public version of 
         //tree_node_ptr search(T*) above.
         //The search algorithm used is Depth First Search.
-        tree_node_ptr search(tree_node_ptr, generic_ptr);
+        treeNodePointer search(treeNodePointer, genericPointer);
         //Searches the tree in a Left-to-Right traversal as the BST is deepened 
         //on each child before next sibling hence depth-first search algorithm.
-        status inorder_traverse(tree_node_ptr tree, status(*p_func)(T));
+        status inorderTraverse(treeNodePointer tree, status(*p_func)(T));
         //points to the first children of the tree structure
-        tree_node_ptr root;
-    };
+        treeNodePointer root_;
+    }; //end of BinaryTree
 
-    //Linked List template 
+    //Linked List implementation below
     //Example:
-    //btree<int>* list = new btree<int>();
-    //list->insert(&b);
-    //delete list;
+    //
+    //  LinkedList<int> * list = new LinkedList<int>();
+    //  LinkedList<int> list2;
+    //  for (LinkedList<int> it = list->begin(); it != list->end(); ++it) {
+    //     std::cout << *it << " ";
+    //  }
+    //
+    //  list = *list;
+    //
+    //  for (auto it : l) {
+    //        std::cout << it << " ";
+    //  }
 
     template<typename T>
-    class linked_list : public std::iterator<std::input_iterator_tag, T> {
+    class LinkedList : public std::iterator<std::input_iterator_tag, T> {
     public:
         //TODO copy constructor, operators, etc.
 
-        linked_list() :
-        list_root(nullptr), length(0) {
-        }
-
-        virtual ~linked_list() {
+        LinkedList() :
+        list_(nullptr), length_(0) {
 
         }
 
-        linked_list<T>& operator++() {
-            ++this->getList_root();
-            return *this;
-        };
+        LinkedList(const LinkedList<T>& other) :
+        list_(other.list_), length_(other.length_) {
+        }
 
-        inline bool empty(list_node_ptr node) {
-            return (node == nullptr);
+        virtual ~LinkedList() {
+
+        }
+
+        inline bool empty(linkedListPointer listPointer) {
+            return (listPointer == nullptr);
         }
 
         status traverse(void(*p_func)(T*)) {
-            return traverse(this->getList_root(), p_func);
+            return traverse(this->operator->(), p_func);
         }
 
         status insert(T* data) {
-            return append((generic_ptr) data);
+            return append((genericPointer) data);
         }
 
-        inline list_node_ptr getList_root() const {
-            return list_root;
+        inline void adjLength() {
+            this->length_ -= 1;
         }
 
         inline int getLength() const {
-            return length;
+            return length_;
         }
 
+        //TODO after implementing a sorted list then use binary search.
+
+        //operator ++ moves to the next list node
+
+        LinkedList<T>& operator++() {
+
+            //std::cout << "tets: " << (this->list_root->next)->next << std::endl;
+
+            this->setListRoot(this->operator->());
+
+            this->adjLength();
+            return *this;
+        };
+
+        LinkedList<T>& operator++(T x) {
+
+            // std::cout << "tets: " << (this->list_root->next)->next << std::endl;
+
+            LinkedList<T>& a = *this;
+
+            this->setListRoot(this->operator->());
+
+            this->adjLength();
+            return a;
+        }
+
+        LinkedList<T>& begin() {//C++11
+            return *this;
+        }
+
+        LinkedList<T>& end() {//C++11
+            //empty list
+            //std::cout << "? " << this->getLength() << std::endl;
+            this->setListRoot((this->list_ - this->getLength()));
+
+            return *this;
+        }
+
+        // returns the current data 
+
+        inline T & operator*() {
+            return *(T*) list_->datapointer;
+        }
+
+        inline linkedListPointer operator->() const {
+            return this->list_->next;
+        }
+
+        inline bool operator==(const LinkedList<T>& rhs) {
+            return this->operator->() == rhs.operator->();
+        }
+
+        inline bool operator!=(const LinkedList<T>& rhs) {
+            return (this->operator->() != rhs.operator->());
+        }
 
     private:
-        void setList_root(list_node_ptr);
-        status traverse(list_node_ptr, void(*p_func)(T*));
-        status allocate_node(list_node_ptr*, generic_ptr);
-        status append(generic_ptr);
+        void setListRoot(linkedListPointer);
+        status traverse(linkedListPointer, void(*p_func)(T*));
+        status allocateLinkedListNode(linkedListPointer*, genericPointer);
+        status append(genericPointer);
         //points to the first node of the list
-        list_node_ptr list_root;
+        linkedListPointer list_;
         //the number of list-nodes created
-        int length;
-    };
+        int length_;
+    }; //end of LinkedList
 
-}// namespace dataStructures
+    //Doubly Linked List using Binary Search Algorithm when the list is sorted.
+    //Example
+    //
+    //DoublyLinkedList<int>* list = new DoublyLinkedList<int>(); 
+    // OR
+    //DoublyLinkedList<int>* list = new DoublyLinkedList<int>(dataStructures::StructureState::SORTED);
+    //
+    //for (auto &x : xrry) {
+    //    list->insert(&x);
+    //}
+    //list->traverse(print); //ie. the function to operate on the data
 
-#endif	/* DATA_STRUCT_H */
+    template<typename T>
+    class DoublyLinkedList {
+    public:
+
+        DoublyLinkedList(StructureState s = StructureState::UNSORTED)
+        : list_(nullptr), state_(s), length_(0) {
+            //initialization
+        };
+
+        status traverse(void(*p_func)(T*)) {
+            return traverse(list_, p_func);
+        }
+
+        inline void insert(T* data) {
+            if (state_ == StructureState::UNSORTED) {
+                (void) unsortedInsert((genericPointer) data);
+            } else {
+                (void) sortedInsert((genericPointer) data);
+            }
+        }
+
+        virtual ~DoublyLinkedList() {
+        }
+
+    private:
+
+        inline bool emptyList(doublyLinkedListPointer listPointer) {
+            return (listPointer == nullptr);
+        }
+
+        inline void freeNode(doublyLinkedListPointer listPointer) {
+            delete listPointer;
+            listPointer = nullptr;
+        }
+
+        status traverse(doublyLinkedListPointer, void(*p_func)(T*));
+        status unsortedInsert(genericPointer);
+        status sortedInsert(genericPointer);
+        status allocateDoublyLinkedListNode(doublyLinkedListPointer*, genericPointer);
+        doublyLinkedListPointer list_;
+        StructureState state_;
+        int length_;
+    }; //end of DoublyLinkedList
+
+}// namespace datastructures
+
+#include "BinarySearchTree_Impl.h"
+#include "LinkedList_Impl.h"
+#include "DoublyLinkedList_Impl.h"
+
+#endif	/* DATASTRUCTURES_H */
 

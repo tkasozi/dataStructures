@@ -12,27 +12,28 @@ enum status {
     OK, ERROR
 };
 
-typedef void * generic_ptr;
-typedef struct tree_node tree_node, * tree_node_ptr;
-typedef struct list_node list_node, * list_node_ptr;
-typedef struct double_linked_node double_linked_node, * double_linked_node_ptr;
+typedef void * genericPointer;
+typedef struct TreeNode TreeNode, * treeNodePointer;
+typedef struct LinkedListNode LinkedListNode, * linkedListPointer;
+typedef struct DoublyLinkedNode DoublyLinkedNode, * doublyLinkedListPointer;
 
-struct tree_node {
+struct TreeNode {
     int key;
-    generic_ptr datapointer;
-    tree_node* left;
-    tree_node* right;
+    genericPointer datapointer;
+    TreeNode* left;
+    TreeNode* right;
 };
 
-struct list_node {
-    generic_ptr datapointer;
-    list_node* next;
+struct LinkedListNode {
+    genericPointer datapointer;
+    LinkedListNode* next;
 };
 
-struct double_linked_node {
-    generic_ptr datapointer;
-    double_linked_node* next;
-    double_linked_node* previous;
+struct DoublyLinkedNode {
+    int index;
+    genericPointer datapointer;
+    DoublyLinkedNode* next;
+    DoublyLinkedNode* previous;
 };
 
 #endif	/* GLOBALS_H */

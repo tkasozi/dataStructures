@@ -11,40 +11,41 @@
 
 #ifndef LINKED_LIST_H
 #define	LINKED_LIST_H
+
 #include "globals.h"
-#include "data_struct.h"
+#include "DataStructures.h"
 
 //Definition of the linked_list functions is within the scope of the nameSpace.
-namespace dataStructures {
+namespace datastructures {
     //TODO search linked_list implementation 
 
     template <typename T>
-    void linked_list<T>::setList_root(list_node_ptr lst) {
-        this->list_root = lst;
+    void LinkedList<T>::setListRoot(linkedListPointer listPointer) {
+        this->list_ = listPointer;
     }
 
     template <typename T>
-    status linked_list<T>::append(generic_ptr data) {
-        list_node_ptr L;
+    status LinkedList<T>::append(genericPointer genericData) {
+        linkedListPointer L;
 
-        if (allocate_node(&L, data) == ERROR) {
+        if (allocateLinkedListNode(&L, genericData) == ERROR) {
             return ERROR;
         }
 
-        if (empty(this->list_root)) {
-            this->setList_root(L);
+        if (empty(this->list_)) {
+            this->setListRoot(L);
         } else {
-            (L)->next = this->list_root;
-            this->setList_root(L);
+            (L)->next = this->list_;
+            this->setListRoot(L);
         }
-
-        this->length++;
+        
+        this->length_++;
         return OK;
     }
 
     template <typename T>
-    status linked_list<T>::allocate_node(list_node_ptr* ptr, generic_ptr data) {
-        list_node_ptr L = new list_node;
+    status LinkedList<T>::allocateLinkedListNode(linkedListPointer* ptr, genericPointer data) {
+        linkedListPointer L = new LinkedListNode;
 
         if (empty(L)) {
             return ERROR;
@@ -58,7 +59,7 @@ namespace dataStructures {
     }
 
     template <typename T>
-    status linked_list<T>::traverse(list_node_ptr ptr, void(*p_func)(T*)) {
+    status LinkedList<T>::traverse(linkedListPointer ptr, void(*p_func)(T*)) {
         if (empty(ptr)) {
             return OK;
         }
