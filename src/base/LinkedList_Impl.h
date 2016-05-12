@@ -9,7 +9,7 @@
  * Created on April 28, 2016, 9:45 AM
  */
 
-#ifdef DOUBLYLINKEDLIST_H
+#ifdef LINKED_LIST_H
 #error "LinkedList_Impl.h should only be included by DataStructures.h"
 #endif
 
