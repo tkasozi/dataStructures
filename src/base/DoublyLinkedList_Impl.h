@@ -5,13 +5,15 @@
  * Created on May 11, 2016, 2:49 PM
  */
 
+#ifdef DOUBLYLINKEDLIST_H
+#error "DoublyLinkedList_Impl.h should only be included by DataStructures.h"
+#endif
+
 #ifndef DOUBLYLINKEDLIST_H
 #define	DOUBLYLINKEDLIST_H
 
 #include "globals.h"
 #include "DataStructures.h"
-
-
 
 namespace datastructures {
 

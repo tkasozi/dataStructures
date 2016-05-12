@@ -9,6 +9,10 @@
  * Created on April 27, 2016, 3:19 PM
  */
 
+#ifdef BINARY_SEARCH_TREE_H
+#error "BinarySearchTree_Impl.h should only be included by DataStructures.h"
+#endif
+
 #ifndef BINARY_SEARCH_TREE_H
 #define	BINARY_SEARCH_TREE_H
 

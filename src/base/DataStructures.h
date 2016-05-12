@@ -8,18 +8,6 @@
 #ifndef DATASTRUCTURES_H
 #define	DATASTRUCTURES_H
 
-#ifdef DOUBLYLINKEDLIST_H
-#error "DoublyLinkedList_Impl.h should not to be included directly. Include DataStructures.h"
-#endif
-
-#ifdef LINKED_LIST_H
-#error "LinkedList_Impl.h should not to be included directly. Include DataStructures.h"
-#endif
-
-#ifdef BINARY_SEARCH_TREE_H
-#error "BinarySearchTree_Impl.h should not to be included directly. Include DataStructures.h"
-#endif 
-
 #include <iostream>
 #include <iterator>
 
@@ -283,6 +271,18 @@ namespace datastructures {
     }; //end of DoublyLinkedList
 
 }// namespace datastructures
+
+#ifdef DOUBLYLINKEDLIST_H
+#error "DoublyLinkedList_Impl.h should not to be included directly. Include DataStructures.h"
+#endif
+
+#ifdef LINKED_LIST_H
+#error "LinkedList_Impl.h should not to be included directly. Include DataStructures.h"
+#endif
+
+#ifdef BINARY_SEARCH_TREE_H
+#error "BinarySearchTree_Impl.h should not to be included directly. Include DataStructures.h"
+#endif 
 
 #include "BinarySearchTree_Impl.h"
 #include "LinkedList_Impl.h"
